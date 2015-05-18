@@ -23,15 +23,14 @@
       </header>
       <div class='row'>
         <div class='col-md-5'>
-          <form id="phrases-form">
-    <div class="form-group">
-      <input name="word" type="text" class="form-control" id="new-word" placeholder="Word">
-    </div>
-    <div class="form-group">
-      <input name="definition" type="text" class="form-control" id="new-definition" placeholder="Definition">
-    </div>
-    <button type="submit" class="btn btn-default">Add</button>
-  </form>
+          
+
+          <form id="phrase-form" class="form-inline">
+      <input name="word" type="text" class="form-control" id="new-phrase" placeholder="Word or phrase?">
+      <input name="definition" class="form-control" placeholder="Definition?">
+      <button type="submit" class="btn btn-default">Add phrase</button>
+    </form>
+
         </div>
         <div class='col-md-6'>
           <h3><span class="label label-primary">Phrase List</span></h3>
@@ -44,13 +43,32 @@
     </div>
   </body>
   <!-- Underscore templates -->
-  <script type="text/template" id="phraseTemp">
-    <% _.each(collection, function(phrase){ %>
-      <!-- li for each item -->
-      <li class='list-group-item'>
-        <h4><span class="label label-default"><%= item.phrase %></span></h4>
-        <%= item.definition %>
-        <button data-id="<%= item.id %>" onclick="Phrase.delete(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <script type="text/template" id="phrases-template">
+    <% _.each(collection, function(item){ %>
+      // li for each item
+      <li class='list-group-item'><%= item.word %>
+        <!-- label for definiton -->
+        <span class="label label-default"><%= item.definition%></span>
+        
+        <div class="buttons">
+          // edit link (pencil icon) to toggle form
+          <a id="toggler" data-toggle="collapse" class="active" data-target="#update-<%=item._id%>" >
+            <span class="glyphicon glyphicon-pencil edit" ></span>
+          </a>
+          
+          //delete button w/ registered onclick function
+          <button data-id="<%= item._id %>" onclick="Phrases.delete(this)" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+       ///update phrase form 
+        <div id="update-<%=item._id%>" class="collapse">
+          <form id="update-form-<%=item._id%>" data-phraseid="<%=item._id%>" class="form-inline" onsubmit="Phrases.update(event, this)">
+            <input name="word" type="text" class="form-control" placeholder="New word?">
+            <input name="definition" class="form-control" placeholder="New definition?">
+            <button type="submit" class="btn btn-default">Update phrase</button>
+          </form>
+        </div> 
       </li>
     <% }); %>
   </script>

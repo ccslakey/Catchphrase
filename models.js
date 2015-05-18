@@ -4,14 +4,8 @@ mongoose.connect("mongodb://localhost/phraseDB");
 
 //new schema
 var phrasesSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    default: ""
-  },
-  description: {
-    type: String,
-    default: ""
-  }
+    word: String,
+    definition: String
   
 });
 //takes schema down runway
