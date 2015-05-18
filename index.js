@@ -5,12 +5,15 @@ var express = require("express"),
     _ = require("underscore"),
     bodyParser = require("body-parser");
     var db = require("./models");
-    var views = path.join(process.cwd(), "views");
+    var views = path.join(process.cwd(), "/public/views");
 
 
 // serve js & css files into a public folder
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules'));
+
 // body parser config
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("bower_components"));
 
@@ -18,39 +21,41 @@ app.use(express.static("bower_components"));
 // ROUTES
 // root path
 app.get("/", function (req, res){
-  // render index.html
-  res.sendFile(path.join(__dirname + '/views/index.html'));
+  // render index.html?????? 
+  var homePath = path.join(views, '/index.html');
+  res.sendFile(homePath);
+  console.log('got home path');
 });
 
 // phrases index path
 app.get("/phrases", function (req, res){
-  // render phrases??
+  //this is working, according to console.logs?
+  console.log('about to send info from server');
   db.Phrase.find({},
-    function (err, phrase) {
-      res.send(phrase);
+    function (err, phrases) {
+      res.send(phrases);
+      console.log('server has sent response');
     });
+  
 });
 
 app.post("/phrases", function (req, res){
-  // grab the word and definition from the form
-  var newPhrase = req.body;
-  // set a sequential id
-  newPhrase.id = phrases[phrases.length - 1].id + 1;
-  phrases.push(newPhrase);
-  res.send(JSON.stringify(newPhrase));
+  //create a new phrase in the db and serve it to the page.
+  console.log('about to post new phrase');
+  db.Phrase.create(req.body, 
+    function (err, phrase) {
+      res.status(201).send(phrase);
+      console.log('server has posted phrase');
+    });
 });
 
 app.delete("/phrases/:id", function(req, res) {
-  // set the value of the id
-  var targetId = req.params.id;
-  // find item in the array matching the id
-  var targetItem = _.findWhere(phrases, {id: targetId});
-  // get the index of the found item
-  var index = phrases.indexOf(targetItem);
-  // remove the item at that index, only remove 1 item
-  phrases.splice(index, 1);
-  // render deleted object
-  res.send(JSON.stringify(targetItem));
+  //fdelete request and get rid of it
+  db.Phrases.findOneAndRemove({
+    _id: req.params._id
+  }, function (err, phrase) {
+    res.sendStatus(204) // success No Content
+  });
 });
 
 // listen on port 3000

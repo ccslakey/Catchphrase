@@ -1,10 +1,9 @@
 //require, duh
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/phraseDB");
-var db = require("./models");
 
 //new schema
-var phraseSchema = new mongoose.Schema({
+var phrasesSchema = new mongoose.Schema({
   title: {
     type: String,
     default: ""
@@ -12,13 +11,10 @@ var phraseSchema = new mongoose.Schema({
   description: {
     type: String,
     default: ""
-  },
-  completed: {
-    type: Boolean,
-    default: false
   }
+  
 });
 //takes schema down runway
-var Phrase = mongoose.model("Phrase", phraseSchema);
+var Phrase = mongoose.model("Phrases", phrasesSchema);
 //dish it up
 module.exports.Phrase = Phrase;

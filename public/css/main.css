@@ -1,7 +1,62 @@
-.form-group {
-  width: 50%;
+h1 {
+	color: RGBA(200, 20, 50, 1);
+}
+
+h1 small {
+	color: RGBA(246, 220, 229, 1);
+}
+
+.list-group-item {
+	background-color: rgba(128, 179, 182, .5);
+	border: 1px solid lightgrey;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.btn-default {
+	font-size: 1em;
+	margin-top: -5px;
+	margin-bottom: 8px;
+	background-color: RGBA(246, 220, 229, .3);
+	padding: 5px;
+}
+
+.secret {
+	visibility: hidden;
+
+}
+
+.notsecret {
+	visibility: visible;
+	text-align: center;
+}
+
+.close {
+	color: red;
+}
+
+.definitions {
+	margin: 0 auto;
+	padding: 0;
+	padding-top: 10px;
+	top: -0.8em;
+	height: 42px;
+	background-color: RGBA(243, 183, 0, .3);
 }
 
 li {
-  width: 50%;
+	height: 42px;
+}
+
+.show-button {
+	outline: 0;
+	background: RGBA(246, 220, 229, .7);
+	border: 1px solid RGBA(246, 220, 229, 1);
+	border-radius: 9px;
+	margin-top: -4px;
+}
+
+.show-button:hover {
+	background-color: lightgrey;
+	border: 1px solid grey;
 }
